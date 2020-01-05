@@ -1,0 +1,62 @@
+\title{PNG (Portable Network Graphics)}
+
+\maketitle
+\tableofcontents
+
+\section{Posibilities}
+\begin{itemize}
+\item Fully lossless.
+\item Only raster (not vectorized) images.
+\end{itemize} 
+
+%\section{Codec}
+%\begin{center}
+%\includegraphics[width=20cm]{PNG_codec_ext}
+%\end{center}
+
+
+\section{The PGM (Portable GrayMap) container}
+ \begin{verbatim}
+ struct PGM_image {
+   "P5\n",        /* Magic number */
+   char width[],  /* Columns */
+   "\n",
+   char height[], /* Rows */
+   "\n",
+   char depth[],  /* 2^number_of_bits_per_component */
+   "\n",
+   if depth == "255" {
+     unsigned char pixel[width][height];
+   } else if depth == "65535" {
+     unsigned short pixel[width][height];
+   }
+ };
+ \end{verbatim}
+
+\section{The PPM (Portable aNyMap) container}
+\begin{verbatim}
+struct PPM_image {
+  "P6\n",        /* Magic number */
+  char* width, " ", height,  /* Columns and rows */
+  "\n",
+  char* depth,   /* 2^number_of_bits_per_component */
+  "\n",
+  struct RGB_pixel pixel[width][height];
+}
+
+if (depth == "255") {
+  struct RGB_pixel {
+    unsigned char R;
+    unsigned char G;
+    unsigned char B;
+  }
+} else if (depth == "65535") {
+  struct RGB_pixel {
+    unsigned short R;
+    unsigned short G;
+    unsigned short B;
+  }
+}
+\end{verbatim}
+
+\bibliography{text-compression}
